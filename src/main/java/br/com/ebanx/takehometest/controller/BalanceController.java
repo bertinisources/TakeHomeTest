@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,18 +28,18 @@ public class BalanceController {
 	private AccountService accountService;
 	
 	@GetMapping()
-	public ResponseEntity<AccountDTO> getBalance(@RequestParam("account_id") Long id) {
+	public ResponseEntity<Object> getBalance(@RequestParam("account_id") Long id) {
 	
 		if(id != null ) { 
 			AccountDTO account = accountService.findById(id);
 			
 			if (account != null ) {
 				logger.info(account);
-				return ResponseEntity.ok(account);
+				return ResponseEntity.ok(account.getBalance());
 			}
 		}
 		
-		return ResponseEntity.notFound().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
 	
 	}
 	

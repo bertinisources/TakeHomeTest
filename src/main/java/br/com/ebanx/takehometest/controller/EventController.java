@@ -3,8 +3,11 @@ package br.com.ebanx.takehometest.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,10 +33,10 @@ public class EventController {
 	
 	@PostMapping
 	@ResponseBody
-	public ResponseEntity<EventReturnDTO> event(@RequestBody Event event, UriComponentsBuilder uriBuilder) throws URISyntaxException {
+	public ResponseEntity<Object> event(@RequestBody @Valid Event event, UriComponentsBuilder uriBuilder) throws URISyntaxException {
 	
 		if(event != null ) { 
-			if(EventTypeEnum.DEPOSIT.getValue().equalsIgnoreCase(event.getEventTypeEnum())) {
+			if(EventTypeEnum.DEPOSIT.getValue().equalsIgnoreCase(event.getType())) {
 				
 				logger.info("DEPOSIT");
 				EventReturnDTO eventReturnDTO = accountService.deposit(event);
@@ -42,7 +45,7 @@ public class EventController {
 				return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				
 			}
-			else if(EventTypeEnum.WITHDRAW.getValue().equalsIgnoreCase(event.getEventTypeEnum())) {
+			else if(EventTypeEnum.WITHDRAW.getValue().equalsIgnoreCase(event.getType())) {
 				logger.info("WITHDRAW");
 				
 				EventReturnDTO eventReturnDTO = accountService.withdraw(event);
@@ -53,9 +56,9 @@ public class EventController {
 					return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				}
 				
-				return ResponseEntity.notFound().build();
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
 			}
-			else if(EventTypeEnum.TRANSFER.getValue().equalsIgnoreCase(event.getEventTypeEnum())) {
+			else if(EventTypeEnum.TRANSFER.getValue().equalsIgnoreCase(event.getType())) {
 				logger.info("TRANSFER");
 				
 				EventReturnDTO eventReturnDTO = accountService.transfer(event);
@@ -67,7 +70,7 @@ public class EventController {
 					return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				}
 				
-				return ResponseEntity.notFound().build();
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
 
 			}
 			
