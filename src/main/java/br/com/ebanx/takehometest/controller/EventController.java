@@ -41,7 +41,6 @@ public class EventController {
 				logger.info("DEPOSIT");
 				EventReturnDTO eventReturnDTO = accountService.deposit(event);
 				
-				//URI uri = uriBuilder.path("/event/{Id}"+event.getDestination()).buildAndExpand(event.getDestination()).toUri();
 				return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				
 			}
@@ -52,7 +51,6 @@ public class EventController {
 				
 				if(eventReturnDTO != null ) {
 					
-					//URI uri = uriBuilder.path("/event/{Id}"+event.getDestination()).buildAndExpand(event.getDestination()).toUri();
 					return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				}
 				
@@ -66,7 +64,6 @@ public class EventController {
 				
 				if(eventReturnDTO != null ) {
 					
-					//URI uri = uriBuilder.path("/event/{Id}"+event.getDestination()).buildAndExpand(event.getDestination()).toUri();
 					return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				}
 				
