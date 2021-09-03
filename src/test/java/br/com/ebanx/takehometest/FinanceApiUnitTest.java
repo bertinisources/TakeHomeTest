@@ -105,8 +105,7 @@ public class FinanceApiUnitTest {
 					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk())
-					.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(100))
-					.andExpect(MockMvcResultMatchers.jsonPath("$.balance").value(20)
+					.andExpect(MockMvcResultMatchers.jsonPath("$").value(20)
 					);
 	}
 	

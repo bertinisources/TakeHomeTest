@@ -1,11 +1,15 @@
 package br.com.ebanx.takehometest.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 public class EventReturnDTO {
 
 
-	
+	@JsonInclude(value = Include.NON_NULL)
 	private AccountDTO origin;
 	
+	@JsonInclude(value = Include.NON_NULL)
 	private AccountDTO destination;
 
 	

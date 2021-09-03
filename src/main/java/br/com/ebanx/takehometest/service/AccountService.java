@@ -13,4 +13,6 @@ public interface AccountService {
 	EventReturnDTO withdraw(Event event);
 
 	EventReturnDTO transfer(Event event);
+
+	void reset();
 }

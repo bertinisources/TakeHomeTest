@@ -124,5 +124,10 @@ public class AccountServiceImpl implements AccountService {
 		return null;
 
 	}
+	
+	public void reset() {
+		accountRepository.deleteAll();
+	}
+
 
 }

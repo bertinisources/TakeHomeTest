@@ -2,14 +2,21 @@ package br.com.ebanx.takehometest.model;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+
+
 
 public class Event {
 
-	//@NotNull @NotEmpty
+	@NotNull
 	private String type;
-	//@NotNull @NotEmpty
+	@NotNull
 	private BigDecimal amount;
+	
 	private String origin;
+	
 	private String destination;
 	
 	public Event() {
@@ -32,10 +39,10 @@ public class Event {
 	}
 	
 	
-	public String getEventTypeEnum() {
+	public String getType() {
 		return type;
 	}
-	public void setEventTypeEnum(String type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	public BigDecimal getAmount() {
