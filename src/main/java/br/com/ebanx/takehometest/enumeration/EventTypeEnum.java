@@ -1,6 +1,11 @@
 package br.com.ebanx.takehometest.enumeration;
 
-
+/**
+ * The Enum that classify the type of transation 
+ * 
+ * @author Fabio Bertini
+ *
+ */
 public enum EventTypeEnum {
 
 	DEPOSIT("deposit"), WITHDRAW("withdraw"), TRANSFER("transfer");

@@ -21,7 +21,12 @@ import br.com.ebanx.takehometest.enumeration.EventTypeEnum;
 import br.com.ebanx.takehometest.model.Event;
 import br.com.ebanx.takehometest.service.AccountService;
 
-
+/**
+ * This class is responsable for handle the transations from an account.
+ * 
+ * @author Fabio Bertini
+ * 
+ */
 @RestController()
 @RequestMapping("/event")
 public class EventController {
@@ -31,6 +36,27 @@ public class EventController {
 	@Autowired
 	private AccountService accountService;
 	
+	/**
+	 * Method that responsable for get balance from an account.
+	 * 
+	 * @param event where:
+	 *  
+	 *  type - type of transaction (DEPOSIT, WITHDRAW, TRANSFER)
+	 *  amount - the amount that need to consider in the transaction
+	 *  origin -  the account that was responsable for provide the amount 
+	 *  destination - the account that received the amount.
+	 * 
+	 * @return ResponseEntity with a <code>Object</code> and the HTTP status. 
+	 * The <code>Object</code> could be <code>EventReturnDTO</code> if everything occurred with successfully
+	 * The <code>Object</code> could be <code>Integer</code> if the transaction occurred with exception.
+	 * 
+	 * 
+	 * HTTP Status:
+	 * 
+	 * 201 - Created: Everything worked as expected.
+	 * 404 - Not Found: The requested resource doesn't exist.
+	 * 
+	 */
 	@PostMapping
 	@ResponseBody
 	public ResponseEntity<Object> event(@RequestBody @Valid Event event, UriComponentsBuilder uriBuilder) throws URISyntaxException {
@@ -38,14 +64,14 @@ public class EventController {
 		if(event != null ) { 
 			if(EventTypeEnum.DEPOSIT.getValue().equalsIgnoreCase(event.getType())) {
 				
-				logger.info("DEPOSIT");
+				logger.info(String.format("DEPOSIT account: %s , amount: %s", event.getDestination(), event.getAmount().intValue()));
 				EventReturnDTO eventReturnDTO = accountService.deposit(event);
 				
 				return ResponseEntity.created(new URI("")).body(eventReturnDTO);
 				
 			}
 			else if(EventTypeEnum.WITHDRAW.getValue().equalsIgnoreCase(event.getType())) {
-				logger.info("WITHDRAW");
+				logger.info(String.format("WITHDRAW account: %s , amount: %s", event.getOrigin(), event.getAmount().intValue()));
 				
 				EventReturnDTO eventReturnDTO = accountService.withdraw(event);
 				
@@ -57,10 +83,9 @@ public class EventController {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
 			}
 			else if(EventTypeEnum.TRANSFER.getValue().equalsIgnoreCase(event.getType())) {
-				logger.info("TRANSFER");
+				logger.info(String.format("TRANSFER account_origin: %s , amount: %s, account_destination: %s", event.getOrigin(), event.getAmount().intValue(), event.getDestination()));
 				
 				EventReturnDTO eventReturnDTO = accountService.transfer(event);
-				
 				
 				if(eventReturnDTO != null ) {
 					
@@ -73,7 +98,7 @@ public class EventController {
 			
 		}
 		
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(0);
 	
 	}
 	

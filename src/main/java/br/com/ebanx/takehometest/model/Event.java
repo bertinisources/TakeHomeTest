@@ -7,7 +7,12 @@ import javax.validation.constraints.NotNull;
 
 
 
-
+/**
+ * This class represents the event that needs to be processed.
+ * 
+ * @author Fabio Bertini
+ * 
+ */
 public class Event {
 
 	@NotNull

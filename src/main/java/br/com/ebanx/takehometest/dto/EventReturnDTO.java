@@ -3,6 +3,12 @@ package br.com.ebanx.takehometest.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * This class represent the DataTransferObject to response the event transactions.
+ * 
+ * @author Fabio Bertini
+ *
+ */
 public class EventReturnDTO {
 
 
